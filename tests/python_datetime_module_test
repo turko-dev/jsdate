@@ -1,0 +1,3 @@
+from jsdate import *
+
+a = Date()
