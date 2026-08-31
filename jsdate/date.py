@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import re
 
 from . import static as _static
+from . import getters as _getters
 
 
 @dataclass
@@ -111,7 +112,6 @@ class Date:
     def __repr__(self) -> str:
         return self.toISOString()
 
-
     @staticmethod
     def now() -> int:
         return _static.now()
@@ -125,3 +125,40 @@ class Date:
         return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
     
+    def getDate(self) -> int | float: return _getters.getDate(self)
+
+    def getDay(self) -> int | float: return _getters.getDay(self)
+
+    def getFullYear(self) -> int | float: return _getters.getFullYear(self)
+
+    def getHours(self) -> int | float: return _getters.getHours(self)
+
+    def getMilliseconds(self) -> int | float: return _getters.getMilliseconds(self)
+
+    def getMinutes(self) -> int | float: return _getters.getMinutes(self)
+
+    def getMonth(self) -> int | float: return _getters.getMonth(self)
+
+    def getSeconds(self) -> int | float: return _getters.getSeconds(self)
+
+    def getTime(self) -> int | float: return _getters.getTime(self)
+
+    def getTimezoneOffset(self) -> int | float: return _getters.getTimezoneOffset(self)
+
+    def getUTCDate(self) -> int | float: return _getters.getUTCDate(self)
+
+    def getUTCDay(self) -> int | float: return _getters.getUTCDay(self)
+
+    def getUTCFullYear(self) -> int | float: return _getters.getUTCFullYear(self)
+
+    def getUTCHours(self) -> int | float: return _getters.getUTCHours(self)
+
+    def getUTCMilliseconds(self) -> int | float: return _getters.getUTCMilliseconds(self)
+
+    def getUTCMinutes(self) -> int | float: return _getters.getUTCMinutes(self)
+
+    def getUTCMonth(self) -> int | float: return _getters.getUTCMonth(self)
+
+    def getUTCSeconds(self) -> int | float: return _getters.getUTCSeconds(self)
+
+    def getYear(self) -> int | float: return _getters.getYear(self)
