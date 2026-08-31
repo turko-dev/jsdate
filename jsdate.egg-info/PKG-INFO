@@ -1,4 +1,16 @@
 Metadata-Version: 2.4
 Name: jsdate
-Version: 0.0.1
-Requires-Dist: requests
+Version: 0.1.1
+Summary: A Python package that mirrors much of JavaScript's Date() object.
+Author: Mert Aygun
+Keywords: date,datetime,javascript,python,jsdate
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown

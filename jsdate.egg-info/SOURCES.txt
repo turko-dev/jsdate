@@ -1,8 +1,15 @@
 pyproject.toml
+./jsdate/__init__.py
+./jsdate/date.py
+./jsdate/getters.py
+./jsdate/setters.py
+./jsdate/static.py
 jsdate/__init__.py
-jsdate/core.py
+jsdate/date.py
+jsdate/getters.py
+jsdate/setters.py
+jsdate/static.py
 jsdate.egg-info/PKG-INFO
 jsdate.egg-info/SOURCES.txt
 jsdate.egg-info/dependency_links.txt
-jsdate.egg-info/requires.txt
 jsdate.egg-info/top_level.txt
