@@ -1,42 +1,56 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-import calendar
+from email.utils import parsedate_to_datetime
+import math
 import re
+
 
 @dataclass
 class Date:
     _dt: datetime
 
-    _ISO_UTC_RE = re.compile(
+    _ISO_DATE_ONLY_RE = re.compile(
+        r"^(?P<year>[+-]?\d{4,6})-"
+        r"(?P<month>\d{2})-"
+        r"(?P<day>\d{2})$"
+    )
+
+    _ISO_LOCAL_OR_OFFSET_RE = re.compile(
         r"^(?P<year>[+-]?\d{4,6})-"
         r"(?P<month>\d{2})-"
         r"(?P<day>\d{2})T"
         r"(?P<hour>\d{2}):"
-        r"(?P<minute>\d{2}):"
-        r"(?P<second>\d{2})\."
-        r"(?P<millisecond>\d{3})Z$"
+        r"(?P<minute>\d{2})"
+        r"(?::(?P<second>\d{2})(?:\.(?P<fraction>\d{1,6}))?)?"
+        r"(?P<tz>Z|[+-]\d{2}:\d{2})?$"
     )
 
     def __init__(self, *args):
-
         if len(args) == 0:
             self._dt = datetime.now().astimezone()
             return
 
         if len(args) == 1:
-            value = args[0] 
+            value = args[0]
 
             if isinstance(value, Date):
                 self._dt = value._dt.replace()
                 return
-            
+
             if isinstance(value, datetime):
-                self._dt = value.replace()
+                if value.tzinfo is None:
+                    self._dt = value.astimezone()
+                else:
+                    self._dt = value.astimezone().replace()
                 return
 
             if isinstance(value, str):
-                self._dt = self._from_iso_utc_string(value)
+                timestamp = self.parse(value)
+                if math.isnan(timestamp):
+                    raise ValueError("Invalid date string")
+                self._dt = datetime.fromtimestamp(timestamp / 1000, tz=timezone.utc).astimezone()
                 return
 
             if isinstance(value, (int, float)):
@@ -45,60 +59,129 @@ class Date:
 
             raise TypeError("Unsupported single-argument constructor form")
 
-        self._dt = self._from_components(*args)
-
-    @classmethod
-    def _from_iso_utc_string(cls, s: str) -> datetime:
-        
-        match = cls._ISO_UTC_RE.match(s)
-        if not match: raise ValueError("Expected format YYYY-MM-DDTHH:mm:ss.sssZ")
-
-        parts = {k: int(v) for k, v in m.groupdict().items()}
-        dt = datetime(
-            year=parts["year"],
-            month=parts["month"],
-            day=parts["day"],
-            hour=parts["hour"],
-            minute=parts["minute"],
-            second=parts["second"],
-            microsecond=parts["millisecond"] * 1000,
-            tzinfo=timezone.utc,
-        )
-        return dt.astimezone()
+        self._dt = self._from_components_local(*args)
 
     @staticmethod
-    def _days_in_month(year: int, month_1_based: int) -> int:
-        return calendar.monthrange(year, month_1_based)[1]
+    def now() -> int:
+        return int(datetime.now(timezone.utc).timestamp() * 1000)
 
-    @classmethod
-    def _from_components(cls, *args) -> datetime:
-        if len(args) < 2 or len(args) > 7:
-            raise TypeError("Component constructor expects 2 to 7 arguments")
+    @staticmethod
+    def parse(date_string: str) -> float:
+        if not isinstance(date_string, str):
+            return math.nan
 
-        year = int(args[0])
-        month_index = int(args[1])
-        day = int(args[2]) if len(args) > 2 else 1
-        hour = int(args[3]) if len(args) > 3 else 0
-        minute = int(args[4]) if len(args) > 4 else 0
-        second = int(args[5]) if len(args) > 5 else 0
-        millisecond = int(args[6]) if len(args) > 6 else 0
+        m = Date._ISO_DATE_ONLY_RE.match(date_string)
+        if m:
+            parts = {k: int(v) for k, v in m.groupdict().items()}
+            try:
+                dt = datetime(parts["year"], parts["month"], parts["day"], tzinfo=timezone.utc)
+                return int(dt.timestamp() * 1000)
+            except ValueError:
+                return math.nan
+
+        m = Date._ISO_LOCAL_OR_OFFSET_RE.match(date_string)
+        if m:
+            gd = m.groupdict()
+            try:
+                year = int(gd["year"])
+                month = int(gd["month"])
+                day = int(gd["day"])
+                hour = int(gd["hour"])
+                minute = int(gd["minute"])
+                second = int(gd["second"] or 0)
+
+                fraction = gd["fraction"] or "0"
+                microsecond = int(fraction.ljust(6, "0")[:6])
+
+                tz_part = gd["tz"]
+                if tz_part == "Z":
+                    dt = datetime(year, month, day, hour, minute, second, microsecond, tzinfo=timezone.utc)
+                    return int(dt.timestamp() * 1000)
+
+                if tz_part:
+                    sign = 1 if tz_part[0] == "+" else -1
+                    off_h = int(tz_part[1:3])
+                    off_m = int(tz_part[4:6])
+                    offset = timezone(sign * timedelta(hours=off_h, minutes=off_m))
+                    dt = datetime(year, month, day, hour, minute, second, microsecond, tzinfo=offset)
+                    return int(dt.timestamp() * 1000)
+
+                local_dt = datetime(year, month, day, hour, minute, second, microsecond).astimezone()
+                return int(local_dt.timestamp() * 1000)
+            except ValueError:
+                return math.nan
+
+        try:
+            dt = parsedate_to_datetime(date_string)
+            if dt is None:
+                return math.nan
+            if dt.tzinfo is None:
+                dt = dt.astimezone()
+            return int(dt.timestamp() * 1000)
+        except Exception:
+            return math.nan
+
+    @staticmethod
+    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float:
+        try:
+            year = int(year)
+            monthIndex = int(monthIndex)
+            day = int(day)
+            hours = int(hours)
+            minutes = int(minutes)
+            seconds = int(seconds)
+            milliseconds = int(milliseconds)
+        except Exception:
+            return math.nan
 
         if 0 <= year <= 99:
             year += 1900
 
-        year += month_index // 12
-        month_index = month_index % 12
-        month = month_index + 1
+        year += monthIndex // 12
+        monthIndex = monthIndex % 12
+        month = monthIndex + 1
 
-        base = datetime(year, month, 1)
-        delta = timedelta(
+        try:
+            base = datetime(year, month, 1, tzinfo=timezone.utc)
+            dt = base + timedelta(
+                days=day - 1,
+                hours=hours,
+                minutes=minutes,
+                seconds=seconds,
+                milliseconds=milliseconds,
+            )
+            return int(dt.timestamp() * 1000)
+        except Exception:
+            return math.nan
+
+    @classmethod
+    def _from_components_local(cls, *args) -> datetime:
+        if len(args) < 2 or len(args) > 7:
+            raise TypeError("Component constructor expects 2 to 7 arguments")
+
+        year = int(args[0])
+        monthIndex = int(args[1])
+        day = int(args[2]) if len(args) > 2 else 1
+        hours = int(args[3]) if len(args) > 3 else 0
+        minutes = int(args[4]) if len(args) > 4 else 0
+        seconds = int(args[5]) if len(args) > 5 else 0
+        milliseconds = int(args[6]) if len(args) > 6 else 0
+
+        if 0 <= year <= 99:
+            year += 1900
+
+        year += monthIndex // 12
+        monthIndex = monthIndex % 12
+        month = monthIndex + 1
+
+        base = datetime(year, month, 1).astimezone()
+        return base + timedelta(
             days=day - 1,
-            hours=hour,
-            minutes=minute,
-            seconds=second,
-            milliseconds=millisecond,
+            hours=hours,
+            minutes=minutes,
+            seconds=seconds,
+            milliseconds=milliseconds,
         )
-        return base + delta
 
     def valueOf(self) -> int:
         return int(self._dt.astimezone(timezone.utc).timestamp() * 1000)
@@ -111,4 +194,4 @@ class Date:
         return self._dt.replace()
 
     def __repr__(self) -> str:
-        return self.toISOString()
+        return f"Date({self.toISOString()})"
