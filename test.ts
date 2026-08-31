@@ -1,2 +1,3 @@
+// This file is entirely for testing purposes only
 
-// console.log(a)
+console.log(new Date().getDate) 
