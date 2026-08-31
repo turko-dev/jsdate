@@ -7,6 +7,7 @@ import re
 from . import static as _static
 from . import setters as _setters
 from . import getters as _getters
+from . import formatters as _formatters
 
 
 @dataclass
@@ -288,3 +289,44 @@ class Date:
     def setYear(self, yearValue):
         """Set the legacy local year value. Deprecated; prefer setFullYear()."""
         return _setters.setYear(self, yearValue)
+
+    
+    def toDateString(self) -> str:
+        """Return the date portion as a human-readable local-time string."""
+        return _formatters.toDateString(self)
+
+    def toISOString(self) -> str:
+        """Return the date in ISO 8601 format using UTC, with a trailing Z."""
+        return _formatters.toISOString(self)
+
+    def toJSON(self):
+        """Return an ISO 8601 string for valid dates, or None for invalid dates."""
+        return _formatters.toJSON(self)
+
+    def toLocaleDateString(self) -> str:
+        """Return a locale-sensitive representation of the date portion in local time."""
+        return _formatters.toLocaleDateString(self)
+
+    def toLocaleString(self) -> str:
+        """Return a locale-sensitive representation of the full date and time in local time."""
+        return _formatters.toLocaleString(self)
+
+    def toLocaleTimeString(self) -> str:
+        """Return a locale-sensitive representation of the time portion in local time."""
+        return _formatters.toLocaleTimeString(self)
+
+    def toString(self) -> str:
+        """Return a human-readable string representation of the date in local time."""
+        return _formatters.toString(self)
+
+    def toTimeString(self) -> str:
+        """Return the time portion as a human-readable local-time string."""
+        return _formatters.toTimeString(self)
+
+    def toUTCString(self) -> str:
+        """Return the date formatted as a UTC string."""
+        return _formatters.toUTCString(self)
+
+    def toGMTString(self) -> str:
+        """Return the UTC string form. Deprecated alias of toUTCString()."""
+        return _formatters.toGMTString(self)
