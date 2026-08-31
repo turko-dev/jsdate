@@ -137,45 +137,146 @@ class Date:
     def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float: return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
 
-    #A map of getter functions (maps from getters.py as _getters) for external use
-    def getDate(self) -> int | float:   
+    # A map of getter functions (maps from getters.py as _getters) for external use
 
-        # Begin to add comments identical to JavaScript Date object
-
+    def getDate(self) -> int | float:
+        """Return the day of the month in local time."""
         return _getters.getDate(self)
-    def getDay(self) -> int | float: return _getters.getDay(self)
-    def getFullYear(self) -> int | float: return _getters.getFullYear(self)
-    def getHours(self) -> int | float: return _getters.getHours(self)
-    def getMilliseconds(self) -> int | float: return _getters.getMilliseconds(self)
-    def getMinutes(self) -> int | float: return _getters.getMinutes(self)
-    def getMonth(self) -> int | float: return _getters.getMonth(self)
-    def getSeconds(self) -> int | float: return _getters.getSeconds(self)
-    def getTime(self) -> int | float: return _getters.getTime(self)
-    def getTimezoneOffset(self) -> int | float: return _getters.getTimezoneOffset(self)
-    def getUTCDate(self) -> int | float: return _getters.getUTCDate(self)
-    def getUTCDay(self) -> int | float: return _getters.getUTCDay(self)
-    def getUTCFullYear(self) -> int | float: return _getters.getUTCFullYear(self)
-    def getUTCHours(self) -> int | float: return _getters.getUTCHours(self)
-    def getUTCMilliseconds(self) -> int | float: return _getters.getUTCMilliseconds(self)
-    def getUTCMinutes(self) -> int | float: return _getters.getUTCMinutes(self)
-    def getUTCMonth(self) -> int | float: return _getters.getUTCMonth(self)
-    def getUTCSeconds(self) -> int | float: return _getters.getUTCSeconds(self)
-    def getYear(self) -> int | float: return _getters.getYear(self)
 
-    #A map of setter functions (maps from setters.py as _setters) for external use
-    def setDate(self, dateValue): return _setters.setDate(self, dateValue)
-    def setFullYear(self, yearValue, monthValue=None, dateValue=None): return _setters.setFullYear(self, yearValue, monthValue, dateValue)
-    def setHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None): return _setters.setHours(self, hoursValue, minutesValue, secondsValue, msValue)
-    def setMilliseconds(self, millisecondsValue):return _setters.setMilliseconds(self, millisecondsValue)
-    def setMinutes(self, minutesValue, secondsValue=None, msValue=None): return _setters.setMinutes(self, minutesValue, secondsValue, msValue)
-    def setMonth(self, monthValue, dateValue=None): return _setters.setMonth(self, monthValue, dateValue)
-    def setSeconds(self, secondsValue, msValue=None): return _setters.setSeconds(self, secondsValue, msValue)
-    def setTime(self, timeValue): return _setters.setTime(self, timeValue)
-    def setUTCDate(self, dateValue): return _setters.setUTCDate(self, dateValue)
-    def setUTCFullYear(self, yearValue, monthValue=None, dateValue=None): return _setters.setUTCFullYear(self, yearValue, monthValue, dateValue)
-    def setUTCHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None): return _setters.setUTCHours(self, hoursValue, minutesValue, secondsValue, msValue)
-    def setUTCMilliseconds(self, millisecondsValue): return _setters.setUTCMilliseconds(self, millisecondsValue)
-    def setUTCMinutes(self, minutesValue, secondsValue=None, msValue=None): return _setters.setUTCMinutes(self, minutesValue, secondsValue, msValue)
-    def setUTCMonth(self, monthValue, dateValue=None): return _setters.setUTCMonth(self, monthValue, dateValue)
-    def setUTCSeconds(self, secondsValue, msValue=None): return _setters.setUTCSeconds(self, secondsValue, msValue)
-    def setYear(self, yearValue): return _setters.setYear(self, yearValue)
+    def getDay(self) -> int | float:
+        """Return the weekday in local time, where Sunday is 0 and Saturday is 6."""
+        return _getters.getDay(self)
+
+    def getFullYear(self) -> int | float:
+        """Return the full local year as a four-digit value when applicable."""
+        return _getters.getFullYear(self)
+
+    def getHours(self) -> int | float:
+        """Return the hour in local time using a 24-hour clock."""
+        return _getters.getHours(self)
+
+    def getMilliseconds(self) -> int | float:
+        """Return the millisecond component in local time."""
+        return _getters.getMilliseconds(self)
+
+    def getMinutes(self) -> int | float:
+        """Return the minute component in local time."""
+        return _getters.getMinutes(self)
+
+    def getMonth(self) -> int | float:
+        """Return the local month using JavaScript's zero-based month numbering."""
+        return _getters.getMonth(self)
+
+    def getSeconds(self) -> int | float:
+        """Return the second component in local time."""
+        return _getters.getSeconds(self)
+
+    def getTime(self) -> int | float:
+        """Return the Unix timestamp in milliseconds."""
+        return _getters.getTime(self)
+
+    def getTimezoneOffset(self) -> int | float:
+        """Return the difference, in minutes, between local time and UTC for this date."""
+        return _getters.getTimezoneOffset(self)
+
+    def getUTCDate(self) -> int | float:
+        """Return the day of the month in UTC."""
+        return _getters.getUTCDate(self)
+
+    def getUTCDay(self) -> int | float:
+        """Return the UTC weekday, where Sunday is 0 and Saturday is 6."""
+        return _getters.getUTCDay(self)
+
+    def getUTCFullYear(self) -> int | float:
+        """Return the full year in UTC."""
+        return _getters.getUTCFullYear(self)
+
+    def getUTCHours(self) -> int | float:
+        """Return the hour component in UTC using a 24-hour clock."""
+        return _getters.getUTCHours(self)
+
+    def getUTCMilliseconds(self) -> int | float:
+        """Return the millisecond component in UTC."""
+        return _getters.getUTCMilliseconds(self)
+
+    def getUTCMinutes(self) -> int | float:
+        """Return the minute component in UTC."""
+        return _getters.getUTCMinutes(self)
+
+    def getUTCMonth(self) -> int | float:
+        """Return the month in UTC using JavaScript's zero-based month numbering."""
+        return _getters.getUTCMonth(self)
+
+    def getUTCSeconds(self) -> int | float:
+        """Return the second component in UTC."""
+        return _getters.getUTCSeconds(self)
+
+    def getYear(self) -> int | float:
+        """Return the legacy local year offset from 1900. Deprecated; prefer getFullYear()."""
+        return _getters.getYear(self)
+
+    # A map of setter functions (maps from setters.py as _setters) for external use
+
+    def setDate(self, dateValue):
+        """Set the day of the month in local time and return the updated timestamp."""
+        return _setters.setDate(self, dateValue)
+
+    def setFullYear(self, yearValue, monthValue=None, dateValue=None):
+        """Set the local year, and optionally the month and day, then return the updated timestamp."""
+        return _setters.setFullYear(self, yearValue, monthValue, dateValue)
+
+    def setHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None):
+        """Set the local hour and optionally minutes, seconds, and milliseconds."""
+        return _setters.setHours(self, hoursValue, minutesValue, secondsValue, msValue)
+
+    def setMilliseconds(self, millisecondsValue):
+        """Set the local millisecond component and return the updated timestamp."""
+        return _setters.setMilliseconds(self, millisecondsValue)
+
+    def setMinutes(self, minutesValue, secondsValue=None, msValue=None):
+        """Set the local minute component and optionally seconds and milliseconds."""
+        return _setters.setMinutes(self, minutesValue, secondsValue, msValue)
+
+    def setMonth(self, monthValue, dateValue=None):
+        """Set the local month with zero-based numbering and optionally the day of the month."""
+        return _setters.setMonth(self, monthValue, dateValue)
+
+    def setSeconds(self, secondsValue, msValue=None):
+        """Set the local second component and optionally milliseconds."""
+        return _setters.setSeconds(self, secondsValue, msValue)
+
+    def setTime(self, timeValue):
+        """Set the date from a Unix timestamp expressed in milliseconds."""
+        return _setters.setTime(self, timeValue)
+
+    def setUTCDate(self, dateValue):
+        """Set the day of the month in UTC and return the updated timestamp."""
+        return _setters.setUTCDate(self, dateValue)
+
+    def setUTCFullYear(self, yearValue, monthValue=None, dateValue=None):
+        """Set the UTC year, and optionally the UTC month and day, then return the updated timestamp."""
+        return _setters.setUTCFullYear(self, yearValue, monthValue, dateValue)
+
+    def setUTCHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None):
+        """Set the UTC hour and optionally minutes, seconds, and milliseconds."""
+        return _setters.setUTCHours(self, hoursValue, minutesValue, secondsValue, msValue)
+
+    def setUTCMilliseconds(self, millisecondsValue):
+        """Set the UTC millisecond component and return the updated timestamp."""
+        return _setters.setUTCMilliseconds(self, millisecondsValue)
+
+    def setUTCMinutes(self, minutesValue, secondsValue=None, msValue=None):
+        """Set the UTC minute component and optionally seconds and milliseconds."""
+        return _setters.setUTCMinutes(self, minutesValue, secondsValue, msValue)
+
+    def setUTCMonth(self, monthValue, dateValue=None):
+        """Set the UTC month with zero-based numbering and optionally the day of the month."""
+        return _setters.setUTCMonth(self, monthValue, dateValue)
+
+    def setUTCSeconds(self, secondsValue, msValue=None):
+        """Set the UTC second component and optionally milliseconds."""
+        return _setters.setUTCSeconds(self, secondsValue, msValue)
+
+    def setYear(self, yearValue):
+        """Set the legacy local year value. Deprecated; prefer setFullYear()."""
+        return _setters.setYear(self, yearValue)
