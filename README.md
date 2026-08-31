@@ -1,7 +1,6 @@
 # jsdate
 
-![jsdate banner]([https://github.com/turko-dev/jsdate/blob/233dabee7932bd5f8c143cfc8c981ef9a162e766/assets/jsdate.png])
-
+![jsdate banner](https://github.com/turko-dev/jsdate/blob/233dabee7932bd5f8c143cfc8c981ef9a162e766/assets/jsdate.png)
 
 **jsdate** is a Python package that mirrors much of JavaScript's `Date` API, including constructor forms, getters, setters, and string conversion methods. It is designed to feel familiar to JavaScript developers while using idiomatic Python under the hood.
 
