@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import re
 
 from . import static as _static
+from . import setters as _setters
 from . import getters as _getters
 
 
@@ -124,41 +125,40 @@ class Date:
     def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float:
         return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
-    
+
+
     def getDate(self) -> int | float: return _getters.getDate(self)
-
     def getDay(self) -> int | float: return _getters.getDay(self)
-
     def getFullYear(self) -> int | float: return _getters.getFullYear(self)
-
     def getHours(self) -> int | float: return _getters.getHours(self)
-
     def getMilliseconds(self) -> int | float: return _getters.getMilliseconds(self)
-
     def getMinutes(self) -> int | float: return _getters.getMinutes(self)
-
     def getMonth(self) -> int | float: return _getters.getMonth(self)
-
     def getSeconds(self) -> int | float: return _getters.getSeconds(self)
-
     def getTime(self) -> int | float: return _getters.getTime(self)
-
     def getTimezoneOffset(self) -> int | float: return _getters.getTimezoneOffset(self)
-
     def getUTCDate(self) -> int | float: return _getters.getUTCDate(self)
-
     def getUTCDay(self) -> int | float: return _getters.getUTCDay(self)
-
     def getUTCFullYear(self) -> int | float: return _getters.getUTCFullYear(self)
-
     def getUTCHours(self) -> int | float: return _getters.getUTCHours(self)
-
     def getUTCMilliseconds(self) -> int | float: return _getters.getUTCMilliseconds(self)
-
     def getUTCMinutes(self) -> int | float: return _getters.getUTCMinutes(self)
-
     def getUTCMonth(self) -> int | float: return _getters.getUTCMonth(self)
-
     def getUTCSeconds(self) -> int | float: return _getters.getUTCSeconds(self)
-
     def getYear(self) -> int | float: return _getters.getYear(self)
+    def setDate(self, dateValue): return _setters.setDate(self, dateValue)
+    def setFullYear(self, yearValue, monthValue=None, dateValue=None): return _setters.setFullYear(self, yearValue, monthValue, dateValue)
+    def setHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None): return _setters.setHours(self, hoursValue, minutesValue, secondsValue, msValue)
+    def setMilliseconds(self, millisecondsValue):return _setters.setMilliseconds(self, millisecondsValue)
+    def setMinutes(self, minutesValue, secondsValue=None, msValue=None): return _setters.setMinutes(self, minutesValue, secondsValue, msValue)
+    def setMonth(self, monthValue, dateValue=None): return _setters.setMonth(self, monthValue, dateValue)
+    def setSeconds(self, secondsValue, msValue=None): return _setters.setSeconds(self, secondsValue, msValue)
+    def setTime(self, timeValue): return _setters.setTime(self, timeValue)
+    def setUTCDate(self, dateValue): return _setters.setUTCDate(self, dateValue)
+    def setUTCFullYear(self, yearValue, monthValue=None, dateValue=None): return _setters.setUTCFullYear(self, yearValue, monthValue, dateValue)
+    def setUTCHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None): return _setters.setUTCHours(self, hoursValue, minutesValue, secondsValue, msValue)
+    def setUTCMilliseconds(self, millisecondsValue): return _setters.setUTCMilliseconds(self, millisecondsValue)
+    def setUTCMinutes(self, minutesValue, secondsValue=None, msValue=None): return _setters.setUTCMinutes(self, minutesValue, secondsValue, msValue)
+    def setUTCMonth(self, monthValue, dateValue=None): return _setters.setUTCMonth(self, monthValue, dateValue)
+    def setUTCSeconds(self, secondsValue, msValue=None): return _setters.setUTCSeconds(self, secondsValue, msValue)
+    def setYear(self, yearValue): return _setters.setYear(self, yearValue)
