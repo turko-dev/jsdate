@@ -1,8 +1,11 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-import calendar
 import re
+
+from . import static as _static
+
 
 @dataclass
 class Date:
@@ -19,18 +22,17 @@ class Date:
     )
 
     def __init__(self, *args):
-
         if len(args) == 0:
             self._dt = datetime.now().astimezone()
             return
 
         if len(args) == 1:
-            value = args[0] 
+            value = args[0]
 
             if isinstance(value, Date):
                 self._dt = value._dt.replace()
                 return
-            
+
             if isinstance(value, datetime):
                 self._dt = value.replace()
                 return
@@ -49,9 +51,9 @@ class Date:
 
     @classmethod
     def _from_iso_utc_string(cls, s: str) -> datetime:
-        
-        match = cls._ISO_UTC_RE.match(s)
-        if not match: raise ValueError("Expected format YYYY-MM-DDTHH:mm:ss.sssZ")
+        m = cls._ISO_UTC_RE.match(s)
+        if not m:
+            raise ValueError("Expected format YYYY-MM-DDTHH:mm:ss.sssZ")
 
         parts = {k: int(v) for k, v in m.groupdict().items()}
         dt = datetime(
@@ -65,10 +67,6 @@ class Date:
             tzinfo=timezone.utc,
         )
         return dt.astimezone()
-
-    @staticmethod
-    def _days_in_month(year: int, month_1_based: int) -> int:
-        return calendar.monthrange(year, month_1_based)[1]
 
     @classmethod
     def _from_components(cls, *args) -> datetime:
@@ -112,3 +110,18 @@ class Date:
 
     def __repr__(self) -> str:
         return self.toISOString()
+
+
+    @staticmethod
+    def now() -> int:
+        return _static.now()
+
+    @staticmethod
+    def parse(date_string: str) -> float:
+        return _static.parse(date_string)
+
+    @staticmethod
+    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float:
+        return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+
+    

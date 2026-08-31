@@ -1,5 +1,4 @@
 from jsdate import *
 
-a = Date()
-
+a = Date().now()
 print(a)
