@@ -49,9 +49,9 @@ class Date:
 
     @classmethod
     def _from_iso_utc_string(cls, s: str) -> datetime:
-        m = cls._ISO_UTC_RE.match(s)
-        if not m:
-            raise ValueError("Expected format YYYY-MM-DDTHH:mm:ss.sssZ")
+        
+        match = cls._ISO_UTC_RE.match(s)
+        if not match: raise ValueError("Expected format YYYY-MM-DDTHH:mm:ss.sssZ")
 
         parts = {k: int(v) for k, v in m.groupdict().items()}
         dt = datetime(
