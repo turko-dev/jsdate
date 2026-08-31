@@ -1,2 +1,2 @@
-// const a = Date.parse()
+const a = new Date().getDate()
 // console.log(a)

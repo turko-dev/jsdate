@@ -24,7 +24,6 @@ _ISO_LOCAL_OR_OFFSET_RE = re.compile(
 
 
 def now() -> int:
-    '''Something'''
     return int(datetime.now(timezone.utc).timestamp() * 1000)
 
 

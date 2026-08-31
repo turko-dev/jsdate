@@ -24,6 +24,8 @@ class Date:
     )
 
     def __init__(self, *args):
+        '''Enables basic storage and retrieval of dates and times.'''
+
         if len(args) == 0:
             self._dt = datetime.now().astimezone()
             return
@@ -51,6 +53,7 @@ class Date:
 
         self._dt = self._from_components(*args)
 
+    #Basic class methods for internal use
     @classmethod
     def _from_iso_utc_string(cls, s: str) -> datetime:
         m = cls._ISO_UTC_RE.match(s)
@@ -113,21 +116,33 @@ class Date:
     def __repr__(self) -> str:
         return self.toISOString()
 
+
+
+    '''The following methods are for external use only and these are the in-house methods that point to other modules.
+    These include:
+    - getters.py
+    - setters.py
+    - static.py
+    etcetera.
+    '''
+    
+    #A map of static methods such as now(), parse(), and UTC() for external use
     @staticmethod
-    def now() -> int:
-        return _static.now()
+    def now() -> int:return _static.now()
 
     @staticmethod
-    def parse(date_string: str) -> float:
-        return _static.parse(date_string)
+    def parse(date_string: str) -> float:return _static.parse(date_string)
 
     @staticmethod
-    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float:
-        return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float: return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
 
+    #A map of getter functions (maps from getters.py as _getters) for external use
+    def getDate(self) -> int | float:   
 
-    def getDate(self) -> int | float: return _getters.getDate(self)
+        # Begin to add comments identical to JavaScript Date object
+
+        return _getters.getDate(self)
     def getDay(self) -> int | float: return _getters.getDay(self)
     def getFullYear(self) -> int | float: return _getters.getFullYear(self)
     def getHours(self) -> int | float: return _getters.getHours(self)
@@ -146,6 +161,8 @@ class Date:
     def getUTCMonth(self) -> int | float: return _getters.getUTCMonth(self)
     def getUTCSeconds(self) -> int | float: return _getters.getUTCSeconds(self)
     def getYear(self) -> int | float: return _getters.getYear(self)
+
+    #A map of setter functions (maps from setters.py as _setters) for external use
     def setDate(self, dateValue): return _setters.setDate(self, dateValue)
     def setFullYear(self, yearValue, monthValue=None, dateValue=None): return _setters.setFullYear(self, yearValue, monthValue, dateValue)
     def setHours(self, hoursValue, minutesValue=None, secondsValue=None, msValue=None): return _setters.setHours(self, hoursValue, minutesValue, secondsValue, msValue)
