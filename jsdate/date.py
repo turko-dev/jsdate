@@ -128,13 +128,21 @@ class Date:
     
     #A map of static methods such as now(), parse(), and UTC() for external use
     @staticmethod
-    def now() -> int:return _static.now()
+    def now() -> int:
+        """Returns the number of milliseconds elapsed since the epoch."""
+        return _static.now()
 
     @staticmethod
-    def parse(date_string: str) -> float:return _static.parse(date_string)
+    def parse(date_string: str) -> float:
+        '''A date string
+        Parses a string containing a date, and returns the number of milliseconds between that date and the epoch.'''
+        return _static.parse(date_string)
 
     @staticmethod
-    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float: return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+    def UTC(year, monthIndex=0, day=1, hours=0, minutes=0, seconds=0, milliseconds=0) -> float: 
+        '''If a year is between 0 and 99, then year is assumed to be 1900 + year.
+        Returns the number of milliseconds between the epoch and the specified date.'''
+        return _static.UTC(year, monthIndex, day, hours, minutes, seconds, milliseconds)
 
 
     # A map of getter functions (maps from getters.py as _getters) for external use

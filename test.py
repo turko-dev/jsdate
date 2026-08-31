@@ -1,4 +1,4 @@
 from jsdate import *
 
-a = Date().getDate()
+a = Date().getDay()
 print(a)
